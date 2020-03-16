@@ -53,11 +53,14 @@
       $('form#loginform').submit(function(e){
         e.preventDefault();
         $.post('.', $('form#loginform').serialize(), function(data){
-          console.log(data)
+          console.log(data);
           if(data.error){
+            console.log("error");
             alert(data.response);
           }
           else{
+            console.log("No error")
+            alert(data.response);
             window.location = ".";
           }
         }, 'json');

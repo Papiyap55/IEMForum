@@ -444,12 +444,15 @@ class ForumLoginView(FormView):
         return context
 
     def form_valid(self, form):
+        print("Valid")
         login(self.request, form.get_user())
-        data = {'error': False, 'response': 'Successfully user loggedin'}
+        data = {'error': False, 'response': 'Successfully user logged in'}
         return JsonResponse(data)
 
     def form_invalid(self, form):
-        return JsonResponse({'error': True, 'response': form.errors})
+        print("Invalid", form.errors)
+        data = {'error': True, 'response': form.errors}
+        return JsonResponse(data)
 
 
 class TopicAdd(LoginRequiredMixin, CreateView):

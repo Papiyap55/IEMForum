@@ -286,12 +286,14 @@
         e.preventDefault();
         $.post('{% url "django_simple_forum:user_login" %}', $('form#loginform').serialize(), function(data){
           if(data.error){
-            console.log(data.response)
+            console.log(data);
+            //alert(data.response);
 
             $('div.error').remove();
             for (var key in data.response) {
               console.log(key)
-              $('#loginform #' + key).after('<div class="error">' + data.response[key] + '</div>');
+              alert(data.response[key][0])
+              $('#loginform').after('<div class="error">' + data.response[key] + '</div>');
             }
           }
           else{
