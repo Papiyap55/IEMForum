@@ -12,13 +12,13 @@ from django.template.defaultfilters import slugify
 class LoginForm(AuthenticationForm):
 
     def clean_username(self):
-        email = self.cleaned_data['username']
-        user = User.objects.filter(email=email)
+        username = self.cleaned_data['username']
+        user = User.objects.filter(username=username)
         if not user:
-            raise forms.ValidationError('Email is not registered.')
+            raise forms.ValidationError('Username is not registered.')
         elif not user[0].is_active:
             raise forms.ValidationError('Your account is not activated yet!')
-        return email
+        return username
 
 
 class RegisterForm(forms.ModelForm):

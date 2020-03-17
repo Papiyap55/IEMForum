@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from django.core.cache import cache
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -107,7 +106,6 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
-cache.clear()
 
 GP_CLIENT_ID = "67476397746-73oonbbt08hfjprua8d266a31crcolss.apps.googleusercontent.com"
 GP_CLIENT_SECRET = "a-rA8cPOCfP116liJiaL3K_n"
