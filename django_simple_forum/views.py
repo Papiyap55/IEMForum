@@ -40,6 +40,7 @@ from .forms import CategoryForm, BadgeForm, RegisterForm, TopicForm, CommentForm
     ChangePasswordForm, UserChangePasswordForm, ForgotPasswordForm
 #from mpcomp.facebook import GraphAPI, get_access_token_from_code
 from .sending_mail import Memail
+from .facebook import *
 
 
 def timeline_activity(user, content_object, namespace, event_type):
@@ -92,7 +93,7 @@ def getout(request):
         return HttpResponseRedirect(reverse('django_simple_forum:topic_list'))
     else:
         logout(request)
-        return HttpResponseRedirect(reverse('django_simple_forum:dashboard'))
+    return HttpResponseRedirect(reverse('django_simple_forum:dashboard'))
 
 
 class CategoryList(AdminMixin, ListView):
@@ -823,8 +824,7 @@ class TopicLike(LoginRequiredMixin, View):
 
 
 class ForumCategoryList(ListView):
-    queryset = ForumCategory.objects.filter(
-        is_active=True, is_votable=True).order_by('-created_on')
+    queryset = ForumCategory.objects.order_by('-created_on')
     template_name = 'forum/categories.html'
     context_object_name = "categories"
     paginate_by = '10'
@@ -1139,8 +1139,7 @@ class UserDetailView(TemplateView):
 
 def facebook_login(request):
     if 'code' in request.GET:
-        accesstoken = get_access_token_from_code(request.GET['code'], request.scheme + '://' + request.META[
-                                                 'HTTP_HOST'] + reverse('django_simple_forum:facebook_login'), settings.FB_APP_ID, settings.FB_SECRET)
+        accesstoken = get_access_token_from_code(request.GET['code'], request.scheme + '://' + request.META['HTTP_HOST'] + reverse('django_simple_forum:facebook_login'), settings.FB_APP_ID, settings.FB_SECRET)
         if 'error' in accesstoken.keys():
             return render(request, '404.html')
         graph = GraphAPI(accesstoken['access_token'])
@@ -1230,7 +1229,7 @@ def facebook_login(request):
         print(request.GET)
     else:
         rty = "https://graph.facebook.com/oauth/authorize?client_id=" + settings.FB_APP_ID + "&redirect_uri=" + request.scheme + '://' + request.META['HTTP_HOST'] + reverse(
-            'django_simple_forum:facebook_login') + "&scope=manage_pages,read_stream, user_about_me, user_birthday, user_location, user_work_history, user_hometown, user_website, email, user_likes, user_groups"
+            'django_simple_forum:facebook_login') + "&scope=manage_pages, user_birthday, user_location, user_hometown, email, user_likes"
         return HttpResponseRedirect(rty)
 
 

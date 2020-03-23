@@ -40,8 +40,8 @@ urlpatterns = [
     url(r'^comment/votes/(?P<pk>[-\w]+)/up/$', views.CommentVoteUpView.as_view(), name="comment_vote_up"),
     url(r'^comment/votes/(?P<pk>[-\w]+)/down/$', views.CommentVoteDownView.as_view(), name="comment_vote_down"),
 
-    url(r'^dashboard/$', views.LoginView.as_view(), name="dashboard"),
-    # url(r'^dashboard/$', DashboardView.as_view(), name="dashboard"),
+    #url(r'^dashboard/$', views.LoginView.as_view(), name="dashboard"),
+    url(r'^dashboard/$',views.DashboardView.as_view(), name="dashboard"),
     url(r'^logout/$', views.getout, name='out'),
 
     url(r'^dashboard/category/list/$', views.CategoryList.as_view(), name="categories"),

@@ -107,11 +107,14 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-GP_CLIENT_ID = "67476397746-73oonbbt08hfjprua8d266a31crcolss.apps.googleusercontent.com"
-GP_CLIENT_SECRET = "a-rA8cPOCfP116liJiaL3K_n"
+#GP_CLIENT_ID = "67476397746-73oonbbt08hfjprua8d266a31crcolss.apps.googleusercontent.com"
+#GP_CLIENT_SECRET = "a-rA8cPOCfP116liJiaL3K_n"
 
-FB_APP_ID = ""
-FB_SECRET = ""
+GP_CLIENT_ID = "377050415674-rfcp78cfrlsjju0tseh3mb3keehvfub2.apps.googleusercontent.com"
+GP_CLIENT_SECRET = "BjGoyvdrqurkfy28GFSerjKJ"
+
+FB_APP_ID = "797531267424247"
+FB_SECRET = "05b232000a9d5f71aab9cf34470ac85e"
 
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
