@@ -1,5 +1,4 @@
 {% extends 'dashboard/dashboard_base.html' %}
-{% load paginate %}
 {% block stage %}
 <div class="content">
   <div class="list">
@@ -7,8 +6,6 @@
       <label>Users</label>
     </div>
     <div class="results-slct-items row mt">
-      {% paginate 10 users_list %}
-      {% show_pageitems %}
       <form name="filter_form" id="filter_form" method='post'>
         {% csrf_token %}
         <input type="text" name="search_text" id="search_text" value="{{ request.POST.search_text }}"/>
@@ -42,7 +39,6 @@
                         {% endfor %}
                       </tbody>
                     </table>
-          {% show_pages %}
     </div>
     </div>
     <nav class="overview-paging">

@@ -1,5 +1,4 @@
 {% extends 'dashboard/dashboard_base.html' %}
-{% load paginate %}
 {% block stage %}
 <div class="content">
   <div class="list">
@@ -9,8 +8,6 @@
     <div class="results-slct-items row mt">
       <div class="col-md-6 col-xs-6 result-items">
       </div>
-      {% paginate 10 topic_list %}
-      {% show_pageitems %}
       <form name="filter_form" id="filter_form" method='post'>
         {% csrf_token %}
         <input type="text" name="search_text" id="search_text" value="{{ request.POST.search_text }}"/>
@@ -47,13 +44,12 @@
           <td>{{ topic.topic_comments.all|length }}</td>
           <td><a href="{% url "django_simple_forum:topic_detail" topic.slug %}" class=""><i class="fa fa-eye view"></i></a>
             <a data-href="{% url "django_simple_forum:topic_status" topic.slug %}" class="topic-status" title="{% ifequal topic.status 'Draft' %}Draft{% endifequal %}{% ifequal topic.status 'Published' %}Published{% endifequal %}{% ifequal topic.status 'Disabled' %}Disabled{% endifequal %}">{% ifequal topic.status 'Draft' %}<i class='fa fa-floppy-o draft view'></i>{% endifequal %}{% ifequal topic.status 'Published' %}<i class='fa fa-newspaper-o published edit'></i>{% endifequal %}{% ifequal topic.status 'Disabled' %}<i class='fa fa-exclamation-triangle disabled'></i>{% endifequal %}</a>
-            <a href="{% url "django_simple_forum:edit_category" topic.slug %}" class=""><i class="fa fa-edit edit"></i></a><a href="#" data-href="{% url "django_simple_forum:delete_topic" topic.slug %}" class="delete-topic"><i class="fa fa-trash delete"></i></a>
+            <a href="{% url "django_simple_forum:topic_update" topic.slug %}" class=""><i class="fa fa-edit edit"></i></a><a href="#" data-href="{% url "django_simple_forum:delete_topic" topic.slug %}" class="delete-topic"><i class="fa fa-trash delete"></i></a>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    {% show_pages %}
     </div>
     </div>
     <nav class="overview-paging">
@@ -65,6 +61,7 @@
 </div>
 {% endblock %}
 {% block extra_js %}
+{% csrf_token %}
 <script type="text/javascript">
   $('.delete-topic').click(function(e){
   e.preventDefault();
@@ -86,6 +83,7 @@
   if (!confirm('Do you want to change the status of topic?'))
     return;
   $.post(href, $("form#jobform").serialize(), function(data) {
+  		console.log(data);
       if (data.error) {
         alert(data.response);
       } else {

@@ -22,6 +22,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.template import Context,loader
 from django.template.defaultfilters import slugify
 from django.utils.crypto import get_random_string
+from django.views.decorators.csrf import csrf_exempt
 
 try:
     from django.contrib.auth import get_user_model
@@ -41,6 +42,7 @@ from .forms import CategoryForm, BadgeForm, RegisterForm, TopicForm, CommentForm
 #from mpcomp.facebook import GraphAPI, get_access_token_from_code
 from .sending_mail import Memail
 from .facebook import *
+
 
 
 def timeline_activity(user, content_object, namespace, event_type):
@@ -94,7 +96,6 @@ def getout(request):
     else:
         logout(request)
     return HttpResponseRedirect(reverse('django_simple_forum:dashboard'))
-
 
 class CategoryList(AdminMixin, ListView):
     model = ForumCategory
@@ -164,7 +165,6 @@ class CategoryAdd(AdminMixin, CreateView):
         context['menus'] = menus
         return context
 
-
 class CategoryDelete(AdminMixin, DeleteView):
     model = ForumCategory
     slug_field = 'slug'
@@ -218,7 +218,6 @@ class CategoryEdit(AdminMixin, UpdateView):
         context['form'] = form
         context['menus'] = menus
         return context
-
 
 class BadgeList(AdminMixin, ListView):
     model = Badge
@@ -291,7 +290,6 @@ class BadgeAdd(AdminMixin, CreateView):
         context['form'] = form
         return context
 
-
 class BadgeDelete(AdminMixin, DeleteView):
     model = Badge
     slug_field = 'slug'
@@ -340,7 +338,6 @@ class BadgeEdit(AdminMixin, UpdateView):
         form = BadgeForm(self.request.GET)
         context['form'] = form
         return context
-
 
 class UserList(AdminMixin, ListView):
     model = UserProfile
@@ -766,7 +763,6 @@ class CommentEdit(LoginRequiredMixin, UpdateView):
         context['form'] = form
         return context
 
-
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
     slug_field = 'comment_id'
@@ -797,6 +793,7 @@ class TopicLike(LoginRequiredMixin, View):
     def get_success_url(self):
         return redirect(reverse('django_simple_forum:categories'))
 
+    
     def post(self, request, *args, **kwargs):
         topic = self.get_object()
         user_topics = UserTopics.objects.filter(user=request.user, topic=topic)
@@ -829,20 +826,19 @@ class ForumCategoryList(ListView):
     context_object_name = "categories"
     paginate_by = '10'
 
-
 class ForumTagsList(ListView):
     queryset = Tags.objects.filter()
     template_name = 'forum/tags.html'
     context_object_name = "tags"
     paginate_by = '10'
 
+    
     def post(self, request, *args, **kwargs):
         tags = self.queryset
         if str(request.POST.get('alphabet_value')) != 'all':
             tags = tags.filter(
                 title__istartswith=request.POST.get('alphabet_value'))
         return render(request, self.template_name, {'tags': tags})
-
 
 class ForumBadgeList(ListView):
     queryset = Tags.objects.filter()
@@ -893,7 +889,6 @@ class TopicDetail(AdminMixin, TemplateView):
         context['topic'] = self.get_object()
         return context
 
-
 class TopicStatus(AdminMixin, View):
     model = Topic
     slug_field = 'slug'
@@ -912,7 +907,6 @@ class TopicStatus(AdminMixin, View):
         topic.save()
         return JsonResponse({'error': False, 'response': 'Successfully Updated Topic Status'})
 
-
 class DashboardUserDelete(AdminMixin, DeleteView):
     model = User
     template_name = "dashboard/topic.html"
@@ -929,7 +923,6 @@ class DashboardUserDelete(AdminMixin, DeleteView):
         user.delete()
         return JsonResponse({'error': False, 'response': 'Successfully Deleted User'})
 
-
 class UserStatus(AdminMixin, View):
     model = User
     slug_name = "user_id"
@@ -940,6 +933,7 @@ class UserStatus(AdminMixin, View):
     def get_object(self):
         return get_object_or_404(User, id=self.kwargs['user_id'])
 
+    
     def post(self, request, *args, **kwargs):
         user = self.get_object()
         if user.is_active:
@@ -969,7 +963,6 @@ class UserDetail(AdminMixin, TemplateView):
             created_by=self.get_object())
         return context
 
-
 class TopicFollow(LoginRequiredMixin, View):
     model = Topic
     slug_field = 'slug'
@@ -977,6 +970,7 @@ class TopicFollow(LoginRequiredMixin, View):
     def get_object(self):
         return get_object_or_404(Topic, slug=self.kwargs['slug'])
 
+    
     def post(self, request, *args, **kwargs):
         topic = self.get_object()
         user_topics = UserTopics.objects.filter(user=request.user, topic=topic)
@@ -1084,7 +1078,6 @@ class ProfileView(TemplateView):
         context['user_profile'] = user_profile
         return context
 
-
 class UserProfilePicView(LoginRequiredMixin, View):
     model = UserProfile
 
@@ -1094,6 +1087,7 @@ class UserProfilePicView(LoginRequiredMixin, View):
     def get_success_url(self):
         return redirect(reverse('django_simple_forum:user_profile'))
 
+    
     def post(self, request, *args, **kwargs):
         user_profile = self.get_object()
         if 'profile_pic' in request.FILES:
@@ -1102,7 +1096,6 @@ class UserProfilePicView(LoginRequiredMixin, View):
             return JsonResponse({'error': False, 'response': 'Successfully uploaded'})
         else:
             return JsonResponse({'error': True, 'response': 'Please Upload Your Profile pic'})
-
 
 class UserSettingsView(LoginRequiredMixin, View):
     model = UserProfile
@@ -1113,6 +1106,7 @@ class UserSettingsView(LoginRequiredMixin, View):
     def get_success_url(self):
         return redirect(reverse('django_simple_forum:user_profile'))
 
+    
     def post(self, request, *args, **kwargs):
         user_profile = self.get_object()
         if not user_profile.send_mailnotifications:

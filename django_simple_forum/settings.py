@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     #'compressor',
     'django_simple_forum',
-    #'sorl.thumbnail',
+    'sorl.thumbnail',
     #'simple_pagination'
 )
 

@@ -1,5 +1,6 @@
 {% extends 'forum/base.html' %}
 {% load forum_tags %}
+{% load thumbnail %}
 {% block stage %}
 
 <div class="main_container">
@@ -14,12 +15,18 @@
                   <div class="user_profile_container">
                     <div class="profile_container">
                       <div class="profile_left">
-                        <img src="{% if request.user|user_profile_pic %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}">
+                        <img src="{% if request.user|user_profile_pic %}{% thumbnail user.profile_pic '100x100' upscale=True padding=True %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}">
                         {% ifequal request.user.id|slugify user_profile.user.id|slugify %}
                         <span class="new_logo file_upload"><a href="#"><i class="fa fa-camera" aria-hidden="true"></i></a></span>
-                        <form name="profilepicform" id="profilepicform"><input type="file" id='file_input' name="profile_pic" id="profile_pic" style="display: none;" onchange="javascript: submitform()"><input type="submit" id='submit' name="submit" style="display: none;">
+                        <form name="profilepicform" id="profilepicform">
+                          {% csrf_token %}
+                          <input type="file" id='file_input' name="profile_pic" id="profile_pic" style="display: none;" onchange="javascript: submitform()">
+                          <input type="submit" id='submit' name="submit" style="display: none;">
                         </form>
-                        <form name="settingsform" id="settingsform"><input type="checkbox" id='sending_mail' name="sending_mail" id="sending_mail" {% if user_profile.send_mailnotifications %}checked{% endif %} value="True">Send Email Notifications<input type="submit" id='submit' name="submit" style="display: none;">
+                        <form name="settingsform" id="settingsform">
+                          {% csrf_token %}
+                          <input type="checkbox" id='sending_mail' name="sending_mail" id="sending_mail" {% if user_profile.send_mailnotifications %}checked{% endif %} value="True">Send Email Notifications
+                          <input type="submit" id='submit' name="submit" style="display: none;">
                         </form>
                         {% endifequal %}
                       </div>
@@ -82,7 +89,7 @@
                             <div class="topic_users">
                               <ul class="users_list">
                                 {% for user in topic.get_topic_users %}
-                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
+                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% thumbnail user.profile_pic "100x100" upscale=True padding=True %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
                                 {% endfor %}
                               </ul>
                             </div>
@@ -112,7 +119,7 @@
                             <div class="topic_users">
                               <ul class="users_list">
                                 {% for user in topic.get_topic_users %}
-                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
+                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% thumbnail user.profile_pic "100x100" upscale=True padding=True %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
                                 {% endfor %}
                               </ul>
                             </div>
@@ -142,7 +149,7 @@
                             <div class="topic_users">
                               <ul class="users_list">
                                 {% for user in topic.get_topic_users %}
-                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
+                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% thumbnail user.profile_pic "100x100" upscale=True padding=True %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
                                 {% endfor %}
                               </ul>
                             </div>
@@ -175,7 +182,7 @@
                             <div class="topic_users">
                               <ul class="users_list">
                                 {% for user in topic.get_topic_users %}
-                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
+                                  <li><a href="{% url "django_simple_forum:user_details" user.user.username %}" title="{{ user.user.username }}"><img src="{% if user.profile_pic %}{% thumbnail user.profile_pic "100x100" upscale=True padding=True %}{% else %}//d2pt99vxm3n8bc.cloudfront.net/static/dummy.jpg{% endif %}"></a></li>
                                 {% endfor %}
                               </ul>
                             </div>
