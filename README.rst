@@ -37,8 +37,8 @@ Source Code is available in `Micropyramid Repository`_.
 
 Modules used:
 
-    * Python  >= 2.6 (or Python 3.4)
-    * Django  = 1.9.6
+    * 3.7 >= Python  >= 3.0
+    * Django  = 3.0
     * JQuery  >= 1.7
     * Microurl >=3.6.1
     * Boto == 2.40.0
