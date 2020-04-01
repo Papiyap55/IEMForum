@@ -102,7 +102,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+MAIL_SENDER = ""
+HOST_URL = ""
 
+#DEFAULT_FROM_EMAIL = 'IEMForum@yahoo.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'AshramForum@gmail.com'
+EMAIL_HOST_PASSWORD = 'forumadmin'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
