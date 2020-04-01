@@ -1,16 +1,21 @@
+<<<<<<< HEAD
 django-simple-forum:
 
+=======
+>>>>>>> 41db00d6c0568ffdb5c274648beb629ba282c376
 Introduction:
 =============
 
 `django simple forum`_ is a discussion board where people with similar interests can create and discuss various topics. You can also mention any particpant those are involved in the repsective topic in the comment. You can also receive email notifications when there is an update in the topic, when you follow the topic.
 
 
-Source Code is available in `Micropyramid Repository`_.
-
 Modules used:
 
+<<<<<<< HEAD
     * 3.7 >= Python  >= 3.0
+=======
+    * Python  == 3.7
+>>>>>>> 41db00d6c0568ffdb5c274648beb629ba282c376
     * Django  = 3.0
     * JQuery  >= 1.7
     * Microurl >=3.6.1
@@ -59,3 +64,7 @@ Installation Procedure
 
     pip install -r requirements.txt
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 41db00d6c0568ffdb5c274648beb629ba282c376
